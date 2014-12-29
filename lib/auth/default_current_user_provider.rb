@@ -38,6 +38,8 @@ class Auth::DefaultCurrentUserProvider
     if auth_token && auth_token.length == 32
       current_user = User.find_by(auth_token: auth_token)
     end
+    
+    current_user = User.find(request.session["user_id"]) unless request.session["user_id"].blank?
 
     if current_user && (current_user.suspended? || !current_user.active)
       current_user = nil

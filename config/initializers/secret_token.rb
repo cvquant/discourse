@@ -10,4 +10,4 @@ unless token
   end
 end
 
-Discourse::Application.config.secret_token = token
+Discourse::Application.config.secret_key_base = token

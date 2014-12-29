@@ -131,6 +131,9 @@ module Discourse
     # route all exceptions via our router
     config.exceptions_app = self.routes
 
+    # For sharing the session cookies with Rails 4.2 apps
+    config.action_dispatch.cookies_serializer = :hybrid
+
     # Our templates shouldn't start with 'discourse/templates'
     config.handlebars.templates_root = 'discourse/templates'
 
