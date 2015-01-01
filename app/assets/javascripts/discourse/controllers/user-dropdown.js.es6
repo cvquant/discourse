@@ -3,8 +3,13 @@ export default Ember.ArrayController.extend(Discourse.HasCurrentUser, {
 
   actions: {
     logout: function() {
-      Discourse.logout();
-      return false;
+      if(Discourse.SiteSettings.qplum_integration) {
+        window.location = Discourse.getURL(Discourse.SiteSettings.qplum_logout_url);
+        return false;
+      } else {
+        Discourse.logout();
+        return false;
+      }
     }
   }
 });

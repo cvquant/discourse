@@ -175,6 +175,9 @@ var ApplicationRoute = Discourse.Route.extend({
     if(Discourse.SiteSettings.enable_sso) {
       var returnPath = encodeURIComponent(window.location.pathname);
       window.location = Discourse.getURL('/session/sso?return_path=' + returnPath);
+    } else if(Discourse.SiteSettings.qplum_integration) {
+      var returnPath = encodeURIComponent(window.location.pathname);
+      window.location = Discourse.getURL(Discourse.SiteSettings.qplum_login_url + '?return_path=' + returnPath);
     } else {
       this.send('autoLogin', 'login', function(){
         Discourse.Route.showModal(self, 'login');

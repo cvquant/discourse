@@ -45,6 +45,15 @@ required:
     client: true
     default: '/images/default-favicon.ico'
   apple_touch_icon_url: '/images/default-apple-touch-icon.png'
+  qplum_integration:
+    client: true
+    default: false
+  qplum_login_url:
+    client: true
+    default: ''
+  qplum_logout_url:
+    client: true
+    default: ''
 
 basic:
   default_locale:
