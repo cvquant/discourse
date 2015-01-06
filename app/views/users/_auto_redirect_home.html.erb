@@ -1,7 +1,7 @@
 <script language="javascript">
   (function() {
     setTimeout(function() {
-      window.location.href = '/';
+      window.location.href = (Discourse.SiteSettings.qplum_integration ? Discourse.SiteSettings.qplum_main_url : '/');
     }, 2000);
   })();
 </script>

@@ -54,6 +54,9 @@ required:
   qplum_logout_url:
     client: true
     default: ''
+  qplum_main_url:
+    client: true
+    default: ''
 
 basic:
   default_locale:
