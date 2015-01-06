@@ -8,20 +8,19 @@
   {{#if postStream.firstPostPresent}}
     <div id='topic-title'>
       <div class='container'>
-        {{#if showStarButton}}
-          <a {{bind-attr class=":star starred:starred"}} {{action "toggleStar"}} href {{bind-attr title="starTooltip"}}></a>
-        {{/if}}
 
         <div class="title-wrapper">
           {{#if editingTopic}}
             {{#if isPrivateMessage}}
               <span class="private-message-glyph">{{fa-icon envelope}}</span>
-              {{autofocus-text-field id='edit-title' value=newTitle maxLength=maxTitleLength}}
+              {{autofocus-text-field id='edit-title' value=buffered.title maxLength=maxTitleLength}}
             {{else}}
-              {{autofocus-text-field id='edit-title' value=newTitle maxLength=maxTitleLength}}
+              {{autofocus-text-field id='edit-title' value=buffered.title maxLength=maxTitleLength}}
               </br>
-              {{category-chooser valueAttribute="id" value=newCategoryId source=category_id}}
+              {{category-chooser valueAttribute="id" value=buffered.category_id source=buffered.category_id}}
             {{/if}}
+
+            {{plugin-outlet "edit-topic"}}
 
             <button class='btn btn-primary btn-small no-text' {{action "finishedEditingTopic"}}>{{fa-icon check}}</button>
             <button class='btn btn-small no-text' {{action "cancelEditingTopic"}}>{{fa-icon times}}</button>
@@ -34,11 +33,7 @@
               {{#if details.loaded}}
                 {{topic-status topic=model}}
                 <a href='{{unbound url}}' {{action "jumpTop"}}>
-                  {{#if topicSaving}}
-                    {{fancy_title}}
-                  {{else}}
-                    {{{fancy_title}}}
-                  {{/if}}
+                  {{{fancy_title}}}
                 </a>
               {{/if}}
 
@@ -52,6 +47,7 @@
                 {{bound-category-link category.parentCategory}}
               {{/if}}
               {{bound-category-link category}}
+              {{plugin-outlet "topic-category"}}
             {{/unless}}
           {{/if}}
         </div>

@@ -158,6 +158,8 @@ en:
       topic_count: "Topics"
       post_count: "Posts"
       user_count: "Users"
+      contact: "Contact Us"
+      contact_info: "In the event of a critical issue or urgent matter affecting this site, please contact us at %{contact_email}."
 
     bookmarks:
       not_logged_in: "sorry, you must be logged in to bookmark posts"
@@ -1281,6 +1283,8 @@ en:
       delete: 'Delete Category'
       create: 'New Category'
       save: 'Save Category'
+      slug: 'Category Slug'
+      slug_placeholder: '(Optional) dashed-words for url'
       creation_error: There has been an error during the creation of the category.
       save_error: There was an error saving the category.
       name: "Category Name"
@@ -1618,13 +1622,17 @@ en:
         edit: "Edit Groups"
         refresh: "Refresh"
         new: "New"
-        selector_placeholder: "add users"
+        selector_placeholder: "enter username"
         name_placeholder: "Group name, no spaces, same as username rule"
         about: "Edit your group membership and names here"
         group_members: "Group members"
         delete: "Delete"
         delete_confirm: "Delete this group?"
         delete_failed: "Unable to delete group. If this is an automatic group, it cannot be destroyed."
+        delete_member_confirm: "Remove '%{username}' from the '%{group}' group?"
+        name: "Name"
+        add: "Add"
+        add_members: "Add members"
 
       api:
         generate_master: "Generate Master API Key"

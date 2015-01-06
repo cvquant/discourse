@@ -95,6 +95,10 @@ Discourse.Topic = Discourse.Model.extend({
     return this.urlForPostNumber(1);
   }.property('url'),
 
+  summaryUrl: function () {
+    return this.urlForPostNumber(1) + (this.get('has_summary') ? "?filter=summary" : "");
+  }.property('url'),
+
   lastPosterUrl: function() {
     return Discourse.getURL("/users/") + this.get("last_poster.username");
   }.property('last_poster'),
@@ -202,23 +206,6 @@ Discourse.Topic = Discourse.Model.extend({
     });
   },
 
-  // Save any changes we've made to the model
-  save: function() {
-    // Don't save unless we can
-    if (!this.get('details.can_edit')) return;
-
-    var data = { title: this.get('title') };
-
-    if(this.get('category')){
-      data.category_id = this.get('category.id');
-    }
-
-    return Discourse.ajax(this.get('url'), {
-      type: 'PUT',
-      data: data
-    });
-  },
-
   /**
     Invite a user to this topic
 
@@ -297,6 +284,14 @@ Discourse.Topic = Discourse.Model.extend({
     });
   },
 
+  togglePinnedForUser: function() {
+    if (this.get('pinned')) {
+      this.clearPin();
+    } else {
+      this.rePin();
+    }
+  },
+
   /**
     Re-pins a topic with a cleared pin
 
@@ -347,7 +342,7 @@ Discourse.Topic = Discourse.Model.extend({
   }.property('excerpt'),
 
   readLastPost: Discourse.computed.propertyEqual('last_read_post_number', 'highest_post_number'),
-  canCleanPin: Em.computed.and('pinned', 'readLastPost')
+  canClearPin: Em.computed.and('pinned', 'readLastPost')
 
 });
 
@@ -371,6 +366,29 @@ Discourse.Topic.reopenClass({
       });
       result.set('actionByName', lookup);
     }
+  },
+
+  update: function(topic, props) {
+    props = JSON.parse(JSON.stringify(props)) || {};
+
+    // Annoyingly, empty arrays are not sent across the wire. This
+    // allows us to make a distinction between arrays that were not
+    // sent and arrays that we specifically want to be empty.
+    Object.keys(props).forEach(function(k) {
+      var v = props[k];
+      if (v instanceof Array && v.length === 0) {
+        props[k + '_empty_array'] = true;
+      }
+    });
+
+    return Discourse.ajax(topic.get('url'), { type: 'PUT', data: props }).then(function(result) {
+
+      // The title can be cleaned up server side
+      props.title = result.basic_topic.title;
+      props.fancy_title = result.basic_topic.fancy_title;
+
+      topic.setProperties(props);
+    });
   },
 
   create: function() {
