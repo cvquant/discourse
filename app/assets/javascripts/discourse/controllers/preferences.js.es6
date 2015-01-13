@@ -39,7 +39,11 @@ export default ObjectController.extend(CanCheckEmails, {
   }.property('model.badge_count'),
 
   canChangePassword: function() {
-    return !Discourse.SiteSettings.enable_sso && Discourse.SiteSettings.enable_local_logins;
+    if(Discourse.SiteSettings.qplum_integration){
+      return false;
+    } else {
+      return !Discourse.SiteSettings.enable_sso && Discourse.SiteSettings.enable_local_logins;
+    };
   }.property(),
 
   availableLocales: function() {
