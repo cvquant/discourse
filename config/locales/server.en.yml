@@ -1401,15 +1401,7 @@ en:
     welcome_user:
       subject_template: "Welcome to %{site_name}!"
       text_body_template: |
-        Thanks for joining %{site_name}, and welcome!
-
-        %{new_user_tips}
-
-        We believe in [civilized community behavior](%{base_url}/guidelines) at all times.
-
-        (If you need to privately communicate with [staff members](/about) as a new user, just reply to this private message.)
-
-        Enjoy your stay!
+        %{new_user_tips}        
 
     welcome_invite:
       subject_template: "Welcome to %{site_name}!"

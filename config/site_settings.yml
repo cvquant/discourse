@@ -17,7 +17,7 @@
 required:
   title:
     client: true
-    default: 'Discourse'
+    default: 'QPlum'
   site_description:
     default: ''
   contact_email:
@@ -25,10 +25,10 @@ required:
     default: ''
     type: email
   notification_email:
-    default: 'noreply@unconfigured.discourse.org'
+    default: 'noreply@qplum.co'
     type: email
   site_contact_username:
-    default: ''
+    default: 'care'
     type: username
   logo_url:
     client: true
@@ -601,7 +601,7 @@ spam:
       default: 2
       min: 0
       max: 3
-  max_new_accounts_per_registration_ip: 3
+  max_new_accounts_per_registration_ip: 300
   min_ban_entries_for_roll_up: 5
   max_age_unmatched_emails: 365
   max_age_unmatched_ips: 365
