@@ -42,12 +42,13 @@ end
 
 class EmailActivator < UserActivator
   def activate
-    Jobs.enqueue(:user_email,
-      type: :signup,
-      user_id: user.id,
-      email_token: user.email_tokens.first.token
-    )
-    I18n.t("login.activate_email", email: user.email)
+    if !SiteSetting.qplum_integration
+      Jobs.enqueue(:user_email,
+        type: :signup,
+        user_id: user.id,
+        email_token: user.email_tokens.first.token
+      )
+      I18n.t("login.activate_email", email: user.email)
   end
 end
 
