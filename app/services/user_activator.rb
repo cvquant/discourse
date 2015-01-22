@@ -49,6 +49,7 @@ class EmailActivator < UserActivator
         email_token: user.email_tokens.first.token
       )
       I18n.t("login.activate_email", email: user.email)
+    end
   end
 end
 
