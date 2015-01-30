@@ -58,7 +58,9 @@ class LoginActivator < UserActivator
 
   def activate
     log_on_user(user)
-    user.enqueue_welcome_message('welcome_user')
-    I18n.t("login.active")
+    if !SiteSetting.qplum_integration
+      user.enqueue_welcome_message('welcome_user')
+      I18n.t("login.active")
+    end
   end
 end
