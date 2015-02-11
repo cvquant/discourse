@@ -56,7 +56,7 @@ module Discourse
   class CSRF < Exception; end
 
   def self.filters
-    @filters ||= [:latest, :unread, :new, :read, :posted]
+    @filters ||= [:latest, :unread, :new, :read, :posted, :bookmarks]
   end
 
   def self.feed_filters
@@ -84,8 +84,12 @@ module Discourse
     @plugins.each { |plugin| plugin.activate! }
   end
 
+  def self.disabled_plugin_names
+    plugins.select {|p| !p.enabled?}.map(&:name)
+  end
+
   def self.plugins
-    @plugins
+    @plugins ||= []
   end
 
   def self.assets_digest
@@ -114,12 +118,10 @@ module Discourse
 
   def self.auth_providers
     providers = []
-    if plugins
-      plugins.each do |p|
-        next unless p.auth_providers
-        p.auth_providers.each do |prov|
-          providers << prov
-        end
+    plugins.each do |p|
+      next unless p.auth_providers
+      p.auth_providers.each do |prov|
+        providers << prov
       end
     end
     providers

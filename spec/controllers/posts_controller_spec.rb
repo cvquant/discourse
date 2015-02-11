@@ -477,15 +477,16 @@ describe PostsController do
 	      expect { xhr :post, :create }.to raise_error(ActionController::ParameterMissing)
       end
 
-      it 'calls the post creator' do
+      it 'creates the post' do
         PostCreator.any_instance.expects(:create).returns(new_post)
-        xhr :post, :create, {raw: 'test'}
-        expect(response).to be_success
-      end
 
-      it 'returns JSON of the post' do
-        PostCreator.any_instance.expects(:create).returns(new_post)
+        # Make sure our extensibility points are triggered
+        DiscourseEvent.expects(:trigger).with(:topic_created, new_post.topic, anything, user).once
+        DiscourseEvent.expects(:trigger).with(:post_created, new_post, anything, user).once
+
         xhr :post, :create, {raw: 'test'}
+
+        expect(response).to be_success
         expect(::JSON.parse(response.body)).to be_present
       end
 
@@ -798,4 +799,41 @@ describe PostsController do
 
   end
 
+  describe "view raw" do
+    describe "by ID" do
+      it "can be viewed by anonymous" do
+        post = Fabricate(:post, raw: "123456789")
+        xhr :get, :markdown_id, id: post.id
+        response.should be_success
+        response.body.should == "123456789"
+      end
+    end
+
+    describe "by post number" do
+      it "can be viewed by anonymous" do
+        topic = Fabricate(:topic)
+        post = Fabricate(:post, topic: topic, post_number: 1, raw: "123456789")
+        post.save
+        xhr :get, :markdown_num, topic_id: topic.id, post_number: 1
+        response.should be_success
+        response.body.should == "123456789"
+      end
+    end
+  end
+
+  describe "short link" do
+    let(:topic) { Fabricate(:topic) }
+    let(:post) { Fabricate(:post, topic: topic) }
+
+    it "redirects to the topic" do
+      xhr :get, :short_link, post_id: post.id
+      response.should be_redirect
+    end
+
+    it "returns a 403 when access is denied" do
+      Guardian.any_instance.stubs(:can_see?).returns(false)
+      xhr :get, :short_link, post_id: post.id
+      response.should be_forbidden
+    end
+  end
 end

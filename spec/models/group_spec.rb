@@ -47,6 +47,24 @@ describe Group do
     Group[:staff].user_ids - [-1]
   end
 
+  it "Correctly handles primary group" do
+    group = Fabricate(:group)
+    user = Fabricate(:user)
+    group.add(user)
+    group.save
+
+    user.primary_group = group
+    user.save
+
+    group.reload
+
+    group.remove(user)
+    group.save
+
+    user.reload
+    expect(user.primary_group).to eq nil
+  end
+
   it "Can update moderator/staff/admin groups correctly" do
 
     admin = Fabricate(:admin)
@@ -202,6 +220,29 @@ describe Group do
     Group.user_trust_level_change!(user.id, 0)
     user.reload
     expect(user.groups.map(&:name).sort).to eq ["trust_level_0"]
+  end
+
+  context "group management" do
+    let(:group) {Fabricate(:group)}
+
+    it "by default has no managers" do
+      group.managers.should be_empty
+    end
+
+    it "multiple managers can be appointed" do
+      2.times do |i|
+        u = Fabricate(:user)
+        group.appoint_manager(u)
+      end
+      expect(group.managers.count).to eq(2)
+    end
+
+    it "manager has authority to edit membership" do
+      u = Fabricate(:user)
+      expect(Guardian.new(u).can_edit?(group)).to be_falsy
+      group.appoint_manager(u)
+      expect(Guardian.new(u).can_edit?(group)).to be_truthy
+    end
   end
 
 end

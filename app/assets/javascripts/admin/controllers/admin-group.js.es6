@@ -1,15 +1,14 @@
 export default Em.ObjectController.extend({
-  needs: ['adminGroups'],
+  needs: ['adminGroupsType'],
   disableSave: false,
-  usernames: null,
 
   currentPage: function() {
-    if (this.get("user_count") == 0) { return 0; }
+    if (this.get("user_count") === 0) { return 0; }
     return Math.floor(this.get("offset") / this.get("limit")) + 1;
   }.property("limit", "offset", "user_count"),
 
   totalPages: function() {
-    if (this.get("user_count") == 0) { return 0; }
+    if (this.get("user_count") === 0) { return 0; }
     return Math.floor(this.get("user_count") / this.get("limit")) + 1;
   }.property("limit", "user_count"),
 
@@ -59,28 +58,29 @@ export default Em.ObjectController.extend({
     },
 
     addMembers: function() {
-      // TODO: should clear the input
       if (Em.isEmpty(this.get("usernames"))) { return; }
       this.get("model").addMembers(this.get("usernames"));
+      // clear the user selector
+      this.set("usernames", null);
     },
 
     save: function() {
       var self = this,
-          group = this.get('model');
+          group = this.get('model'),
+          groupsController = this.get("controllers.adminGroupsType");
 
-      self.set('disableSave', true);
+      this.set('disableSave', true);
 
       var promise;
-      if (group.get('id')) {
+      if (group.get("id")) {
         promise = group.save();
       } else {
         promise = group.create().then(function() {
-          var groupsController = self.get('controllers.adminGroups');
           groupsController.addObject(group);
         });
       }
       promise.then(function() {
-        self.send('showGroup', group);
+        self.transitionToRoute("adminGroup", group);
       }, function(e) {
         var message = $.parseJSON(e.responseText).errors;
         bootbox.alert(message);
@@ -91,12 +91,13 @@ export default Em.ObjectController.extend({
 
     destroy: function() {
       var group = this.get('model'),
-          groupsController = this.get('controllers.adminGroups'),
+          groupsController = this.get('controllers.adminGroupsType'),
           self = this;
 
-      bootbox.confirm(I18n.t("admin.groups.delete_confirm"), I18n.t("no_value"), I18n.t("yes_value"), function(result) {
-        if (result) {
-          self.set('disableSave', true);
+      this.set('disableSave', true);
+
+      bootbox.confirm(I18n.t("admin.groups.delete_confirm"), I18n.t("no_value"), I18n.t("yes_value"), function(confirmed) {
+        if (confirmed) {
           group.destroy().then(function() {
             groupsController.get('model').removeObject(group);
             self.transitionToRoute('adminGroups.index');

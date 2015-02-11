@@ -3,6 +3,7 @@ require_dependency 'email/message_builder'
 require_dependency 'age_words'
 
 class UserNotifications < ActionMailer::Base
+  helper :application
   default charset: 'UTF-8'
 
   include Email::BuildEmailHelper
@@ -17,7 +18,7 @@ class UserNotifications < ActionMailer::Base
     build_email(user.email,
                 template: 'user_notifications.signup_after_approval',
                 email_token: opts[:email_token],
-                new_user_tips: SiteText.text_for(:usage_tips))
+                new_user_tips: SiteText.text_for(:usage_tips, base_url: Discourse.base_url))
   end
 
   def authorize_email(user, opts={})

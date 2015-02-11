@@ -1,13 +1,14 @@
 # Available options:
 #
-# default - The default value of the setting.
-# client  - Set to true if the javascript should have access to this setting's value.
-# refresh - Set to true if clients should refresh when the setting is changed.
-# min     - For a string setting, the minimum length. For an integer setting, the minimum value.
-# max     - For a string setting, the maximum length. For an integer setting, the maximum value.
-# regex   - A regex that the value must match.
-# enum    - The setting has a fixed set of allowed values, and only one can be chosen.
-#           Set to the class name that defines the set.
+# default   - The default value of the setting.
+# client    - Set to true if the javascript should have access to this setting's value.
+# refresh   - Set to true if clients should refresh when the setting is changed.
+# min       - For a string setting, the minimum length. For an integer setting, the minimum value.
+# max       - For a string setting, the maximum length. For an integer setting, the maximum value.
+# regex     - A regex that the value must match.
+# validator - The name of the class that will be use to validate the value of the setting.
+# enum      - The setting has a fixed set of allowed values, and only one can be chosen.
+#             Set to the class name that defines the set.
 # type: email    - Must be a valid email address.
 # type: username - Must match the username of an existing user.
 # type: list     - A list of values, chosen from a set of valid values defined in the choices option.
@@ -64,6 +65,7 @@ basic:
     default: 'en'
     enum: 'LocaleSiteSetting'
     refresh: true
+    shadowed_by_global: true
   allow_user_locale:
     client: true
     default: false
@@ -104,6 +106,7 @@ basic:
      - categories
      - read
      - posted
+     - bookmarks
   post_menu:
     client: true
     type: list
@@ -143,6 +146,11 @@ basic:
     client: true
     type: list
     default: 'BF1E2E|F1592A|F7941D|9EB83B|3AB54A|12A89D|25AAE2|0E76BD|652D90|92278F|ED207B|8C6238|231F20|808281|B3B5B4|283890'
+  category_style:
+    client: true
+    default: 'bar'
+    enum: 'CategoryStyleSetting'
+    preview: '<span class="badge-wrapper {{value}}"><span class="badge-category-parent-bg" style="background-color: #aaa;"></span><span class="badge-category-bg" style="background-color: #777;"></span><span style="color: #fff;" data-drop-close="true" class="badge-category clear-badge">Category</span></span>'
   enable_mobile_theme:
     client: true
     default: true
@@ -245,6 +253,7 @@ login:
     default: ''
     type: list
   forgot_password_strict: false
+  log_out_strict: true
 
 users:
   min_username_length:
@@ -419,12 +428,16 @@ email:
   default_digest_email_frequency:
     default: 7
     enum: 'DigestEmailSiteSetting'
+  suppress_digest_email_after_days: 365
+  disable_digest_emails:
+    default: false
+    client: true
   email_custom_headers: 'Auto-Submitted: auto-generated'
   email_subject: '[%{site_name}] %{optional_pm}%{optional_cat}%{topic_title}'
   reply_by_email_enabled: false
   reply_by_email_address:
     default: ''
-    regex: "%{reply_key}"
+    validator: "ReplyByEmailAddressValidator"
   pop3_polling_enabled: false
   pop3_polling_ssl: true
   pop3_polling_period_mins: 5
@@ -492,7 +505,7 @@ files:
     enum: 'S3RegionSiteSetting'
   s3_upload_bucket:
     default: ''
-    regex: "^[^\\.]*$"
+    regex: "^[^A-Z._]+$"
   allow_profile_backgrounds:
     client: true
     default: true
@@ -623,7 +636,7 @@ rate_limits:
   max_bookmarks_per_day: 20
   max_flags_per_day: 20
   max_edits_per_day: 30
-  max_stars_per_day: 20
+  max_invites_per_day: 10
   max_topics_in_first_day: 5
   max_replies_in_first_day: 10
 

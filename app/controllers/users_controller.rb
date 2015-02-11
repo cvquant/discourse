@@ -66,7 +66,7 @@ class UsersController < ApplicationController
     guardian.ensure_can_edit!(user)
 
     if params[:user_fields].present?
-      params[:custom_fields] ||= {}
+      params[:custom_fields] = {} unless params[:custom_fields].present?
       UserField.where(editable: true).each do |f|
         val = params[:user_fields][f.id.to_s]
         val = nil if val === "false"
@@ -88,7 +88,8 @@ class UsersController < ApplicationController
     user = fetch_user_from_params
     guardian.ensure_can_edit_username!(user)
 
-    result = user.change_username(params[:new_username])
+    # TODO proper error surfacing (result is a Model#save call)
+    result = user.change_username(params[:new_username], current_user)
     raise Discourse::InvalidParameters.new(:new_username) unless result
 
     render json: {
@@ -212,20 +213,19 @@ class UsersController < ApplicationController
     # Handle custom fields
     user_fields = UserField.all
     if user_fields.present?
-      if params[:user_fields].blank? && UserField.where(required: true).exists?
-        return fail_with("login.missing_user_field")
-      else
-        fields = user.custom_fields
-        user_fields.each do |f|
-          field_val = params[:user_fields][f.id.to_s]
-          if field_val.blank?
-            return fail_with("login.missing_user_field") if f.required?
-          else
-            fields["user_field_#{f.id}"] = field_val
-          end
+      field_params = params[:user_fields] || {}
+      fields = user.custom_fields
+
+      user_fields.each do |f|
+        field_val = field_params[f.id.to_s]
+        if field_val.blank?
+          return fail_with("login.missing_user_field") if f.required?
+        else
+          fields["user_field_#{f.id}"] = field_val
         end
-        user.custom_fields = fields
       end
+
+      user.custom_fields = fields
     end
 
     authentication = UserAuthenticator.new(user, session)
@@ -439,6 +439,9 @@ class UsersController < ApplicationController
     guardian.ensure_can_edit!(user)
 
     file = params[:file] || params[:files].first
+
+    # HACK FOR IE9 to prevent the "download dialog"
+    response.headers["Content-Type"] = "text/plain" if request.user_agent =~ /MSIE 9/
 
     begin
       image = build_user_image_from(file)

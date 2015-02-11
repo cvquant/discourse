@@ -6,12 +6,34 @@ export default Discourse.View.extend(StringBuffer, {
   rawTemplate: 'list/topic_list_item.raw',
   classNameBindings: ['controller.checked',
                       ':topic-list-item',
-                      'unboundClassNames'
-       ],
+                      'unboundClassNames',
+                      'selected'],
+
+  actions: {
+    select: function(){
+      this.set('controller.selectedRow', this);
+    },
+
+    toggleBookmark: function() {
+      var self = this;
+      this.get('topic').toggleBookmark().finally(function() {
+        self.rerender();
+      });
+    }
+  },
+
+  selected: function(){
+    return this.get('controller.selectedRow')===this;
+  }.property('controller.selectedRow'),
 
   unboundClassNames: function(){
     var classes = [];
     var topic = this.get('topic');
+
+
+    if (topic.get('category')) {
+      classes.push("category-" + topic.get('category.slug'));
+    }
 
     if(topic.get('hasExcerpt')){
       classes.push('has-excerpt');

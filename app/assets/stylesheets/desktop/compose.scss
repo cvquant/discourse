@@ -81,6 +81,9 @@
   margin-left: 10px;
 }
 
+// hide cancel upload link on IE9 (not supported)
+.ie9 #cancel-file-upload { display: none; }
+
 #reply-control {
   .toggle-preview, #draft-status, #file-uploading {
     position: absolute;
@@ -215,7 +218,7 @@
       display: inline-block;
       .select2-container {
         width: 400px;
-        margin-top: 6px;
+        margin-top: 5px;
         a {
           padding-top: 4px;
           height: 28px;
