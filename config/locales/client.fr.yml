@@ -140,17 +140,20 @@ fr:
       stat:
         all_time: "depuis toujours"
         last_7_days: "Les 7 derniers jours"
+        last_30_days: "Les 30 derniers jours"
       like_count: "J'aime"
       topic_count: "Sujets"
       post_count: "Nombre de messages"
-      user_count: "Nombre d'utilisateurs"
+      user_count: "Nouveaux utilisateurs"
+      active_user_count: "Utilisateurs actifs"
       contact: "Nous contacter"
-      contact_info: "En cas de problème critique ou urgent sur ce site, veuillez nous contacter: %{contact_email}."
+      contact_info: "En cas de problème critique ou urgent sur ce site, veuillez nous contacter : %{contact_info}"
     bookmarked:
       title: "Signet"
+      clear_bookmarks: "Vider signets"
       help:
-        bookmark: "Cliquer pour ajouter ce sujet à vos signets"
-        unbookmark: "Cliquer pour retirer ce sujet de vos signets"
+        bookmark: "Cliquer pour ajouter le premier message de ce sujet à vos signets"
+        unbookmark: "Cliquer pour retirer tous vos signets pour ce sujet"
     bookmarks:
       not_logged_in: "désolé, vous devez être connecté pour ajouter des message dans vos signets"
       created: "vous avez ajouté ce message dans vos signets"
@@ -455,6 +458,7 @@ fr:
         title: "Mot de passe"
         too_short: "Votre mot de passe est trop court."
         common: "Ce mot de passe est trop commun."
+        same_as_username: "Votre mot de passe est le même que votre pseudo."
         ok: "Votre mot de passe semble correct."
         instructions: "Au moins %{count} caractères."
       associated_accounts: "Connexions"
@@ -751,6 +755,7 @@ fr:
         unread: "Il n'y a plus de sujet à lire."
         category: "Il n'y a plus de sujet sur {{category}} à lire."
         top: "Il n'y a plus de meilleurs sujets."
+        bookmarks: "Il n'y a plus de sujets dans vos signets."
     topic:
       filter_to: "{{post_count}} messages sur ce sujet"
       create: 'Créer votre sujet'
@@ -766,7 +771,6 @@ fr:
         one: '1 sujet non lu'
         other: '{{count}} sujets non lus'
       title: 'Sujet'
-      loading: 'Chargement du sujet…'
       invalid_access:
         title: "Ce sujet est privé"
         description: "Désolé, vous n'avez pas accès à ce sujet !"
@@ -981,6 +985,7 @@ fr:
         attachment_too_large: "Désolé, le fichier que vous êtes en train d'envoyer est trop grand (taille maximum de {{max_size_kb}} Ko)."
         file_too_large: "Désolé, le fichier que vous êtes en train d'envoyer est trop grand (taille maximum de {{max_size_kb}} Ko)"
         too_many_uploads: "Désolé, vous ne pouvez envoyer qu'un seul fichier à la fois."
+        too_many_dragged_and_dropped_files: "Désolé, vous pouvez seulement glisser-déposer jusqu'à 10 fichiers à la fois."
         upload_not_authorized: "Désolé, le fichier que vous êtes en train d'envoyer n'est pas autorisé (extensions autorisées : {{authorized_extensions}})."
         image_upload_not_allowed_for_new_user: "Désolé, les nouveaux utilisateurs ne peuvent pas envoyer d'image."
         attachment_upload_not_allowed_for_new_user: "Désolé, les nouveaux utilisateurs ne peuvent pas envoyer de fichier."
@@ -1042,6 +1047,7 @@ fr:
         people:
           off_topic: "{{icons}} l'ont signalé comme étant hors-sujet"
           spam: "{{icons}} l'ont signalé comme étant du spam"
+          spam_with_url: "{{icons}} signalé <a href='{{postUrl}}'>ceci comme spam</a>"
           inappropriate: "{{icons}} l'ont signalé comme inapproprié"
           notify_moderators: "{{icons}} l'ont signalé pour modération"
           notify_moderators_with_url: "{{icons}} <a href='{{postUrl}}'>l'ont signalé pour modération</a>"
@@ -1377,6 +1383,14 @@ fr:
         suspended: 'Suspendu :'
         private_messages_short: "MPs"
         private_messages_title: "Messages Privés"
+        space_free: "{{size}} libre"
+        uploads: "téléchargements"
+        backups: "sauvegardes"
+        traffic_short: "Trafic"
+        traffic: "Requêtes Web Application"
+        page_views: "Requêtes API"
+        page_views_short: "Requêtes API"
+        show_traffic_report: "Voir rapport de trafic détaillé"
         reports:
           today: "Aujourd'hui"
           yesterday: "Hier"
@@ -1492,6 +1506,14 @@ fr:
         info_html: "Cette clé vous permettra de créer et mettre à jour des sujets à l'aide d'appels JSON."
         all_users: "Tous les Utilisateurs"
         note_html: "Gardez cette clé <strong>secrète</strong> ! Tous les personnes qui la possède peuvent créer des messages au nom de n'import quel utilisateur."
+      plugins:
+        title: "Plugins"
+        installed: "Plugins installés"
+        name: "Nom du plugin"
+        none_installed: "Vous n'avez aucun plugin installé."
+        version: "Version du plugin"
+        change_settings: "Changer les paramètres"
+        howto: "Comment installer des plugins ?"
       backups:
         title: "Sauvegardes"
         menu:
@@ -1545,6 +1567,7 @@ fr:
             title: "Restaurer (RollBack) la base de données à l'état de travail précédent"
             confirm: "Êtes-vous sûr de vouloir restaurer (rollback) la base de données à l'état de fonctionnement précédent?"
       export_csv:
+        user_archive_confirm: "Êtes-vous sûr de vouloir télécharger vos messages?"
         success: "L'exportation a été initialisé. Vous serez averti par message privé lorsque le traitement sera terminé."
         failed: "L'export a échoué. Veuillez consulter les logs."
         rate_limit_error: "Les messages peuvent être téléchargés une fois par jour, veuillez ressayer demain."
@@ -1555,6 +1578,9 @@ fr:
           screened_email: "Exporter la liste des adresses de courriel sous surveillance dans un fichier CSV."
           screened_ip: "Exporter la liste complète des adresses IP sous surveillance dans un fichier CSV."
           screened_url: "Exporter toutes les URL sous surveillance vers un fichier CSV"
+      invite:
+        button_text: "Envoyer invitations"
+        button_title: "Envoyer invitations"
       customize:
         title: "Personnaliser"
         long_title: "Personnalisation du site"
@@ -1741,6 +1767,7 @@ fr:
             label: "Nouveau :"
             ip_address: "Adresse IP"
             add: "Ajouter"
+            filter: "Rechercher"
           roll_up:
             text: "Consolider"
             title: "Créer de nouvelles plages de sous réseaux à bannir s'il y a au moins 'min_ban_entries_for_roll_up' entrées."
@@ -1876,6 +1903,8 @@ fr:
         suspended_explanation: "Un utilisateur suspendu ne peut pas se connecter."
         block_explanation: "Un utilisateur bloqué ne peut pas écrire de message, ni créer de sujet."
         trust_level_change_failed: "Il y a eu un problème lors de la modification du niveau de confiance de l'utilisateur."
+        grant_admin_failed: "Il y a eu un problème pour accorder les privilèges d'admin."
+        grant_moderation_failed: "Il y a eu un problème pour accorder les privilèges de modération."
         suspend_modal_title: "Suspendre l'utilisateur"
         trust_level_2_users: "Utilisateurs de niveau de confiance 2"
         trust_level_3_requirements: "Niveaux de confiance 3 Pré-requis"
@@ -1936,6 +1965,10 @@ fr:
           title: "Modifiable après l'inscription ?"
           enabled: "modifiable"
           disabled: "non modifiable"
+        show_on_profile:
+          title: "Afficher dans le profil public"
+          enabled: "affiché dans le profil"
+          disabled: "pas affiché dans le profil"
         field_types:
           text: 'Zone de texte'
           confirm: 'Confirmation'
@@ -1969,6 +2002,7 @@ fr:
           uncategorized: 'Autre'
           backups: "Sauvegardes"
           login: "Connexion"
+          plugins: "Plugins"
       badges:
         title: Badges
         new_badge: Nouveau Badge
@@ -1983,10 +2017,13 @@ fr:
           modal_title: Regroupement de badge
         granted_by: Décerné par
         granted_at: Décerné le
+        reason_help: (Lien vers un message ou sujet)
         save: Sauvegarder
         delete: Supprimer
         delete_confirm: Ëtes-vous sûr de vouloir supprimer ce badge ?
         revoke: Retirer
+        reason: Raison
+        expand: Développer &hellip;
         revoke_confirm: Êtes-vous sur de vouloir retirer ce badge à cet utilisateur ?
         edit_badges: Modifier les badges
         grant_badge: Décerner le badge
@@ -2073,7 +2110,7 @@ fr:
         dismiss_topics: '<b>x</b>, <b>r</b> Marquer comme lu les sujets'
       actions:
         title: 'Actions'
-        bookmark_topic: '<b>f</b> Ajouter ce sujet à vos signets'
+        bookmark_topic: '<b>f</b> Modifier signet pour ce sujet'
         pin_unpin_topic: '<b>shift</b>+<b>p</b> Épingler/De-épingler le sujet'
         share_topic: '<b>shift</b>+<b>s</b> Partager un sujet'
         share_post: '<b>s</b> Partager un message'
@@ -2138,6 +2175,9 @@ fr:
         autobiographer:
           name: Autobiographe
           description: A rempli les informations de son <a href="/my/preferences">profil</a>
+        anniversary:
+          name: Jubilaire
+          description: Membres actif depuis un an, avec au moins un message
         nice_post:
           name: Joli message
           description: A reçu 10 j'aime sur un message. Ce badge peut être décerné plusieurs fois

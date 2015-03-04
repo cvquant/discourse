@@ -164,14 +164,6 @@ class User < ActiveRecord::Base
     name.titleize
   end
 
-  # Find a user by temporary key, nil if not found or key is invalid
-  def self.find_by_temporary_key(key)
-    user_id = $redis.get("temporary_key:#{key}")
-    if user_id.present?
-      find_by(id: user_id.to_i)
-    end
-  end
-
   def self.find_by_username_or_email(username_or_email)
     if username_or_email.include?('@')
       find_by_email(username_or_email)
@@ -201,13 +193,6 @@ class User < ActiveRecord::Base
 
     self.username = new_username
     save
-  end
-
-  # Use a temporary key to find this user, store it in redis with an expiry
-  def temporary_key
-    key = SecureRandom.hex(32)
-    $redis.setex "temporary_key:#{key}", 2.months, id.to_s
-    key
   end
 
   def created_topic_count
@@ -252,7 +237,7 @@ class User < ActiveRecord::Base
   end
 
   def unread_notifications_by_type
-    @unread_notifications_by_type ||= notifications.where("id > ? and read = false", seen_notification_id).group(:notification_type).count
+    @unread_notifications_by_type ||= notifications.visible.where("id > ? and read = false", seen_notification_id).group(:notification_type).count
   end
 
   def reload
@@ -263,7 +248,7 @@ class User < ActiveRecord::Base
   end
 
   def unread_private_messages
-    @unread_pms ||= notifications.where("read = false AND notification_type = ?", Notification.types[:private_message]).count
+    @unread_pms ||= notifications.visible.where("read = false AND notification_type = ?", Notification.types[:private_message]).count
   end
 
   def unread_notifications
@@ -698,6 +683,39 @@ class User < ActiveRecord::Base
     end
   end
 
+  def number_of_deleted_posts
+    Post.with_deleted
+        .where(user_id: self.id)
+        .where(user_deleted: false)
+        .where.not(deleted_by_id: self.id)
+        .where.not(deleted_at: nil)
+        .count
+  end
+
+  def number_of_flagged_posts
+    Post.with_deleted
+        .where(user_id: self.id)
+        .where(id: PostAction.where(post_action_type_id: PostActionType.notify_flag_type_ids)
+                             .where(disagreed_at: nil)
+                             .select(:post_id))
+        .count
+  end
+
+  def number_of_flags_given
+    PostAction.where(user_id: self.id)
+              .where(disagreed_at: nil)
+              .where(post_action_type_id: PostActionType.notify_flag_type_ids)
+              .count
+  end
+
+  def number_of_warnings
+    self.warnings.count
+  end
+
+  def number_of_suspensions
+    UserHistory.for(self, :suspend_user).count
+  end
+
   protected
 
   def badge_grant
@@ -831,38 +849,6 @@ class User < ActiveRecord::Base
         # if for some reason the user can't be deleted, continue on to the next one
       end
     end
-  end
-
-  def number_of_deleted_posts
-    Post.with_deleted
-        .where(user_id: self.id)
-        .where(user_deleted: false)
-        .where.not(deleted_by_id: self.id)
-        .where.not(deleted_at: nil)
-        .count
-  end
-
-  def number_of_flagged_posts
-    Post.with_deleted
-        .where(user_id: self.id)
-        .where(id: PostAction.where(post_action_type_id: PostActionType.notify_flag_type_ids)
-                             .where(disagreed_at: nil)
-                             .select(:post_id))
-        .count
-  end
-
-  def number_of_flags_given
-    PostAction.where(user_id: self.id)
-              .where(post_action_type_id: PostActionType.notify_flag_type_ids)
-              .count
-  end
-
-  def number_of_warnings
-    self.warnings.count
-  end
-
-  def number_of_suspensions
-    UserHistory.for(self, :suspend_user).count
   end
 
   private

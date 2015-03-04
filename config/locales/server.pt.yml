@@ -34,7 +34,6 @@ pt:
     messages:
       too_long_validation: "está limitado a %{max} caracteres; inseriu %{length}."
       invalid_boolean: "Valor lógico inválido."
-      taken: "já está a ser utilizado. (os nomes dos grupos são insensitivos)"
     embed:
       load_from_remote: "Ocorreu um erro no carregamento dessa mensagem."
   bulk_invite:
@@ -131,14 +130,6 @@ pt:
 
       Para mais, [verifique as diretrizes da comunidade](/guidelines). Este painel irá aparecer apenas para o seu primeiro %{education_posts_text}.
     avatar: "### Que tal uma nova imagem para a sua conta? \n\nPublicou alguns tópicos e respostas, mas o seu avatar não é tão original como você o é -- é o mesmo avatar padrão que todos os novos utilizadores têm .\n\nJá considerou **[visitar o seu perfil de utilizador](%{profile_path})** e fazer o envio de uma imagem personalizada que o representa?\n\nÉ mais fácil acompanhar as discussões da comunidade e encontrar pessoas interessantes em conversas quando todas as pessoas têm um avatar exclusivo!\n"
-    sequential_replies: |
-      ### Considere responder várias mensagens de uma só vez
-
-      Em vez de várias respostas a um tópico, por favor considere uma única resposta que inclua o texto em debate ou um @nome com referências a mensagens anteriores.
-
-      Poderá editar as suas respostas anteriores, para fazer referências a outras mensagens, fazendo sobressair esse texto, selecionando o botão de resposta apropriado.
-
-      É mais fácil para todos, ler tópicos que têm poucas respostas bem desenvolvidas, do que variadíssimas respostas curtas e elementares.
     dominating_topic: |+
       ### Deixe que os outros se juntem à conversa
 
@@ -434,7 +425,6 @@ pt:
       xaxis: "Dia"
       yaxis: "Número de visitas"
     signups:
-      title: "Utilizadores"
       xaxis: "Dia"
       yaxis: "Número de novos utilizadores"
     topics:
@@ -663,7 +653,6 @@ pt:
     max_username_length: "Tamanho máximo do nome de utilizador, em caracteres. AVISO: QUAISQUER UTILIZADORES COM NOMES MAIORES QUE ISTO SERÃO PROIBIDOS DE ACEDER AO SÍTIO."
     min_password_length: "Tamanho mínimo da palavra-passe."
     block_common_passwords: "Não permitir palavras-passe que estejam nas 10,000 palavras-passe mais comuns."
-    enable_sso_provider: "Implementa o protocolo SSO para o Discourse em /session/sso_provider endpoint, requer que sso_secret esteja configurado"
     sso_url: "URL da inscrição única"
     sso_overrides_email: "Substitui o email local por um email externo de um SSO (AVISO: discrepâncias podem ocorrer devido a normalização de emails locais)"
     sso_overrides_username: "Substitui nomes de utilizador locais por nomes de utilizadores externos de um SSO (AVISO: discrepâncias podem ocorrer diferenças no nome de utilizador length/requirements)"
@@ -829,7 +818,6 @@ pt:
     suppress_uncategorized_badge: "Não mostrar distintivos para tópicos sem categoria nas listagens de tópicos."
     global_notice: "Exibir um banner global URGENTE, EMERGÊNCIA a todos os visitantes, mudar para branco para esconder (HTML permitido)."
     disable_edit_notifications: "Desativa notificações de edição do sistema quando 'download_remote_images_to_local' está ativo."
-    enable_names: "Permitir a exibição de nomes completos de utilizadores. Desativar para ocultar nomes completos."
     display_name_on_posts: "Mostrar o nome completo de um utilizador nas suas mensagens em adição ao seu @nome-de-utilizador."
     invites_per_page: "Convites por defeito exibidos na página do utilizador."
     short_progress_text_threshold: "Após o número de mensagens num tópico passar acima deste número, a barra de progresso irá apenas mostrar o número da mensagem atual. Se alterar a largura da barra de progresso, poderá ter que mudar este valor."
@@ -1081,22 +1069,8 @@ pt:
         Contudo, se a mensagem for escondida pela comunidade uma segunda vez, irá manter-se escondida até ser tratada pelo pessoal – e poderão ainda ocorrer ações, incluindo uma possível suspensão da sua conta.
 
         Para orientação adicional, por favor consulte as [diretrizes da comunidade](%{base_url}/guidelines).
-    usage_tips:
-      text_body_template: "Esta mensagem privada tem algumas dicas para que possa começar.\n\n## Continue a arrastar para baixo\n\nNão há botões para páginas seguintes nem números de páginas – para ler mais, **simplesmente continue a arrastar para baixo!**\n\nÀ medida que novas mensagens vão surgindo, estas irão aparecer automaticamente.\n\n## Onde estou?\n\n- Para pesquisar a sua página de utilizador ou o menu, use o botão com o **icone <kbd>☰</kbd> no canto superior direito**.\n\n- Qualquer título de tópico irá levá-lo à próxima mensagem não lida. Utilize o tempo da última atividade e o contador de mensagens para ir para o início ou para o final.\n- Ao ler um tópico, salte para o topo &uarr; ao selecionar o título do tópico. Selecione a barra de progresso verde no canto inferior direito para controlos de navegação completos, ou utilize <kbd>página principal</kbd> e <kbd>chaves</kbd>finais.\n\n<img src=\"/images/welcome/progress-bar.png\" width=\"143\" height=\"39\">\n\n## Como posso responder?\n\n- Para responder ao tópico, utilize o botão de Resposta <img src=\"/images/welcome/reply-topic.png\" width=\"29\" height=\"25\"> no final de cada página.\n\n- Para responder a uma mensagem específica, utilize o botão de Resposta <img src=\"/images/welcome/reply-post.png\" width=\"29\" height=\"25\"> nessa mensagem.\n\n-Para levar a conversa para um rumo diferente, mas mantê-las hiperligadas utilize <img src=\"/images/welcome/reply-as-linked-topic.png\"\
-        \ width=\"15\" height=\"25\"> Responder como Tópico hiperligado à direita desta mensagem.\n\nPara citar alguém na sua resposta, selecione o texto que pretende citar, e de seguida pressione qualquer um dos botões de Resposta.\n\n<img src=\"/images/welcome/quote-reply.png\" width=\"350\" height=\"129\">\n\nPara mencionar alguém na sua resposta, mencione os seus nomes. Escreva `@` e o preenchimento automático irá aparecer. \n\n<img src=\"/images/welcome/username-completion.png\" width=\"230\" height=\"131\">\n\nPara [Emoji padrão](http://www.emoji.codes/), simplesmente comece a digitar `:` ou os tradicionais  risonhos `:)` :smile:\n\n## O que posso fazer mais?\n\nHá botões de ação no final de cada publicação.\n\n<img src=\"/images/welcome/like-link-flag-bookmark.png\" width=\"169\" height=\"46\">\n\nPara deixar alguém saber que gostou da sua mensagem, utilize o botão **gosto**. Se vir um problema com a mensagem, avise em privado através do botão de **sinalização**.\n\nPode também **partilhar** uma hiperligação de uma publicação, ou **marcá-la** para mais tarde ter a referência na sua página de perfil. \n\nQuem está a falar comigo?\n\nQuando alguém responde à sua mensagem, cita a sua mensagem ou menciona o seu `@nome-de-utilizador`, um número irá aparecer imediatamente no canto superior direito na página. Utilize-o ao aceder às suas **notificações**.\n\n<img src=\"/images/welcome/notification-panel.png\" width=\"178\" height=\"\
-        59\">\n\nNão se preocupe em falhar uma resposta  – irá receber emails com respostas diretas (e mensagens privadas) se não estiver online quando estas chegam.\n\n## Quando são as conversações consideradas novas?\n\nPor defeito, todas as conversações com menos de dois dias são consideradas novas, e qualquer conversação onde ainda não tenha participado (respondido, criado, ou lido por um extenso período) irão ser automaticamente acompanhadas. \n\nVerá o indicador numérico e o indicador azul (novo) junto desses tópicos:\n\n<img src=\"/images/welcome/topics-new-unread.png\" width=\"368\" height=\"89\">\n\nPode alterar o estado individual das notificações de um tópico através do controlo no final do tópico (também pode ser definido por categoria). Para mudar a maneira como os tópicos são acompanhados, ou a definição de novo, consulte [as suas preferências](/my/preferences).\n\n## Porque não posso fazer certas coisas?\n\nNovos utilizadores estão um pouco limitados por razões de segurança. À medida que for participando, irá ganhar confiança por parte da comunidade, tornar-se um cidadão completo e essas limitações serão automaticamente removidas. Com um [nível de confiança] suficientemente alto (https://meta.discourse.org/t/what-do-user-trust-levels-do/4924), irá ganhar ainda mais capacidades para ajudar-nos a gerir a comunidade em conjunto.\n"
     welcome_user:
       subject_template: "Bem-vindo a %{site_name}!"
-      text_body_template: |
-        Bem-vindo e obrigado por se juntar a %{site_name}!
-
-        %{new_user_tips}
-
-        Acreditamos num constante [comportamento comunitário civilizador](%{base_url}/guidelines).
-
-        (Se necessitar de entrar em contacto privado com [os responsáveis do fórum](/about) na qualidade de novo utilizador, basta responder a esta mensagem privada.)
-
-        Desfrute da sua estadia!
     welcome_invite:
       subject_template: "Bem-vindo a %{site_name}!"
     backup_succeeded:
@@ -1382,23 +1356,6 @@ pt:
         %{base_url}/users/authorize-email/%{email_token}
     signup_after_approval:
       subject_template: "Foi aprovado no %{site_name}!"
-      text_body_template: |
-        Bem-vindo a %{nome_do_sítio}!
-
-        Um elemento da equipa de gestão aprovou a sua conta em %{nome_do_sítio}.
-
-        Clique na seguinte ligação para confirmar e ativar a sua nova conta:
-        %{url_base}/utilizadores/ativar_conta/%{mensagem_de_correio_eletrónico_de_símbolo}
-
-        Se esta ligação não estiver disponível, experimente copiá-la e colá-la na barra de endereços do seu navegador da internet.
-
-        %{dicas_para_novo_utilizador}
-
-        Acreditamos no [comportamento_civilizado_da_comunidade](%{url_base}/indicações) em todas as circunstâncias.
-
-        (Se necessitar de entrar em contacto em privado com [membros_da_equipa](/sobre) na qualidade de novo utilizador, basta que responda a esta mensagem privada.)
-
-        Desfrute da sua estadia!
     signup:
       subject_template: "[%{site_name}] Ativar a sua nova conta"
       text_body_template: |
@@ -1560,27 +1517,3 @@ pt:
       Se decidirmos alterar a nossa política de privacidade, iremos publicar as mudanças nesta página.
 
       Este documento é CC-BY-SA. Foi atualizado pela última vez em 31 de Maio de 2013.
-  static:
-    search_help: |
-      <h2>Dicas</h2>
-      <p>
-      <ul>
-      <li>A correspondência de títulos está priorizada, por isso em caso de dúvida, pesquise por títulos</li>
-      <li>Palavras únicas e incomuns irão sempre produzir melhores resultados</li>
-      <li>Sempre que possível, direcione a sua pesquisa para um tópico, utilizador ou categoria em particular</li>
-      </ul>
-      </p>
-      <h2>Opções</h2>
-      <p>
-      <table>
-      <tr><td><code>encomenda:visualizações</code></td><td><code>encomenda:última</code></td><td colspan=3></td></tr>
-      <tr><td><code>estado:aberto</code></td><td><code>estado:fechado</code></td><td>
-      <code>estado:arquivado</code></td><td><code>estado:semrespostas</code></td><td>
-      <code>estado:utilizadorúnico</code></td></tr>
-      <tr><td><code>categoria:foo</code></td><td><code>utilizador:foo</code></td><td colspan=3></td></tr>
-      <tr><td><code>em:gostos</code></td><td><code>em:publicado</code></td><td><code>em:vigilância</code>
-      </td><td><code>em:acompanhamento</code></td><td><code>em:privado</code></td></tr>
-      </table>
-      </p>
-      <p>
-      <code>categoria arco-íris:parques estado:aberto encomenda:última</code> irá retornar uma pesquisa por tópicos que contém a palavra "arco-íris" na categoria "parques" que não estão fechados ou arquivados e que estão ordenados pela data da última mensagem.

@@ -133,7 +133,7 @@ class TopicsController < ApplicationController
     end
 
     changes.delete(:title) if topic.title == changes[:title]
-    changes.delete(:category_id) if (changes[:category_id].blank? or topic.category_id == changes[:category_id].to_i)
+    changes.delete(:category_id) if topic.category_id.to_i == changes[:category_id].to_i
 
     success = true
     if changes.length > 0
@@ -217,15 +217,24 @@ class TopicsController < ApplicationController
     render nothing: true
   end
 
+  def remove_bookmarks
+    topic = Topic.find(params[:topic_id].to_i)
+
+    PostAction.joins(:post)
+              .where(user_id: current_user.id)
+              .where('topic_id = ?', topic.id).each do |pa|
+
+      PostAction.remove_act(current_user, pa.post, PostActionType.types[:bookmark])
+    end
+
+    render nothing: true
+  end
+
   def bookmark
-    topic = Topic.find_by(id: params[:topic_id])
+    topic = Topic.find(params[:topic_id].to_i)
     first_post = topic.ordered_posts.first
 
-    if params[:bookmarked] == "true"
-      PostAction.act(current_user, first_post, PostActionType.types[:bookmark])
-    else
-      PostAction.remove_act(current_user, first_post, PostActionType.types[:bookmark])
-    end
+    PostAction.act(current_user, first_post, PostActionType.types[:bookmark])
 
     render nothing: true
   end
@@ -323,24 +332,15 @@ class TopicsController < ApplicationController
 
     guardian.ensure_can_change_post_owner!
 
-    post_ids = params[:post_ids].to_a
-    topic = Topic.find_by(id: params[:topic_id].to_i)
-    new_user = User.find_by(username: params[:username])
-
-    return render json: failed_json, status: 422 unless post_ids && topic && new_user
-
-    ActiveRecord::Base.transaction do
-      post_ids.each do |post_id|
-        post = Post.find(post_id)
-        # update topic owner (first avatar)
-        topic.user = new_user if post.is_first_post?
-        post.set_owner(new_user, current_user)
-      end
+    begin
+      PostOwnerChanger.new( post_ids: params[:post_ids].to_a,
+                            topic_id: params[:topic_id].to_i,
+                            new_owner: User.find_by(username: params[:username]),
+                            acting_user: current_user ).change_owner!
+      render json: success_json
+    rescue ArgumentError
+      render json: failed_json, status: 422
     end
-
-    topic.update_statistics
-
-    render json: success_json
   end
 
   def clear_pin

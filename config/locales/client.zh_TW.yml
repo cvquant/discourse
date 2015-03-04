@@ -123,17 +123,20 @@ zh_TW:
       stat:
         all_time: "所有時間"
         last_7_days: "最近 7 天"
+        last_30_days: "最近 30 天"
       like_count: "讚"
       topic_count: "討論話題"
       post_count: "文章"
-      user_count: "用戶"
+      user_count: "新用戶"
+      active_user_count: "啟用的用戶"
       contact: "聯絡我們"
-      contact_info: "當網站發生嚴重錯誤或緊急事件，請聯絡我們 %{contact_email}"
+      contact_info: "當網站發生嚴重錯誤或緊急事件，請聯絡我們 %{contact_info}"
     bookmarked:
       title: "書籤"
+      clear_bookmarks: "清除書籤"
       help:
-        bookmark: "加入書籤"
-        unbookmark: "移除書籤"
+        bookmark: "將此主題的第一篇文章加入書籤"
+        unbookmark: "移除此主題所有書籤"
     bookmarks:
       not_logged_in: "抱歉，你必須先登入才能將文章加上書籤"
       created: "你已將此文章加上書籤"
@@ -428,6 +431,7 @@ zh_TW:
         title: "密碼"
         too_short: "你的密碼太短。"
         common: "此密碼太簡單。"
+        same_as_username: "密碼與使用者名稱相同"
         ok: "你的密碼符合要求。"
         instructions: "至少 %{count} 個字。"
       associated_accounts: "登入"
@@ -719,6 +723,7 @@ zh_TW:
         unread: "已經沒有其它未讀的討論話題了。"
         category: "{{category}} 分類已經沒有其它討論話題了。"
         top: "沒有更多精選討論話題。"
+        bookmarks: "書籤裡沒有更多的討論話題了。"
     topic:
       filter_to: "在討論話題裡顯示 {{post_count}} 文章"
       create: '新討論話題'
@@ -732,7 +737,6 @@ zh_TW:
       unread_topics:
         other: '{{count}} 個未讀討論話題'
       title: '討論話題'
-      loading: '正在載入討論話題...'
       invalid_access:
         title: "私人討論話題"
         description: "抱歉，你沒有進入此討論話題的權限！"
@@ -935,6 +939,7 @@ zh_TW:
         attachment_too_large: "抱歉，你想上傳的檔案太大 (最大限制為 {{max_size_kb}} kb)。"
         file_too_large: "抱歉，你想上傳的檔案太大 (最大限制為 {{max_size_kb}} kb)。"
         too_many_uploads: "抱歉，一次只能上傳一個檔案。"
+        too_many_dragged_and_dropped_files: "抱歉，一次最多只能拖放 10 個檔案"
         upload_not_authorized: "抱歉，你想上傳的是不允許的檔案 (允許的副檔名: {{authorized_extensions}})."
         image_upload_not_allowed_for_new_user: "抱歉，新用戶不可上傳圖片。"
         attachment_upload_not_allowed_for_new_user: "抱歉，新用戶不可上傳附件。"
@@ -994,6 +999,7 @@ zh_TW:
         people:
           off_topic: "{{icons}} 標示為偏離主題"
           spam: "{{icons}} 標示為垃圾文章"
+          spam_with_url: "{{icons}} 投訴 <a href='{{postUrl}}'>此為 spam</a>"
           inappropriate: "{{icons}} 標示為不適內容"
           notify_moderators: "{{icons}} 已通知板主"
           notify_moderators_with_url: "{{icons}} <a href='{{postUrl}}'>已通知板主</a>"
@@ -1311,6 +1317,14 @@ zh_TW:
         suspended: '已停權:'
         private_messages_short: "私訊"
         private_messages_title: "私人訊息"
+        space_free: "{{size}} 可用空間"
+        uploads: "上傳"
+        backups: "備份檔"
+        traffic_short: "流量"
+        traffic: "網頁應用程式請求數"
+        page_views: "API Requests"
+        page_views_short: "API Requests"
+        show_traffic_report: "顯示詳細的流量報表"
         reports:
           today: "今天"
           yesterday: "昨天"
@@ -1421,6 +1435,14 @@ zh_TW:
         info_html: "你可以使用 API 金鑰呼叫 JSON 建立與更新討論話題。"
         all_users: "所有用戶"
         note_html: "請<strong>安全地</strong>保管密鑰，任何擁有該密鑰的使用者，都可以使用它以任何的使用者的名義發文。"
+      plugins:
+        title: "外掛"
+        installed: "已安裝外掛"
+        name: "名稱"
+        none_installed: "尚未安裝任何外掛"
+        version: "版本"
+        change_settings: "更改設定"
+        howto: "如何安裝外掛?"
       backups:
         title: "備份"
         menu:
@@ -1474,6 +1496,7 @@ zh_TW:
             title: "回溯資料庫到以前的工作階段"
             confirm: "你確定要回溯資料庫到以前的工作階段?"
       export_csv:
+        user_archive_confirm: "你確定要下載你的文章嗎?"
         success: "開始匯出，處理完畢後將以私人訊息通知你。"
         failed: "匯出失敗。請觀看紀錄。"
         rate_limit_error: "文章每天只能下載一次，請明天再試。"
@@ -1484,6 +1507,9 @@ zh_TW:
           screened_email: "以 CSV 格式匯出所有已顯示的電子郵件列表"
           screened_ip: "以 CSV 格式匯出所有已顯示的 IP 列表"
           screened_url: "以 CSV 格式匯出所有已顯示的 URL 列表"
+      invite:
+        button_text: "送出邀請"
+        button_title: "送出邀請"
       customize:
         title: "客製化"
         long_title: "網站客製化"
@@ -1670,6 +1696,7 @@ zh_TW:
             label: "新增:"
             ip_address: "IP 位址"
             add: "加入"
+            filter: "搜尋"
           roll_up:
             text: "Roll up"
             title: "如果有至少 'min_ban_entries_for_roll_up' 個記錄，建立一個子網域封鎖記錄"
@@ -1798,6 +1825,8 @@ zh_TW:
         suspended_explanation: "被停權的用戶無法登入。"
         block_explanation: "被封鎖的用戶無法發表文章或建立討論話題。"
         trust_level_change_failed: "修改用戶的信任等級時發生錯誤。"
+        grant_admin_failed: "賦予管理員權限時發生問題。"
+        grant_moderation_failed: "賦予板主權限時發生問題。"
         suspend_modal_title: "將用戶停權"
         trust_level_2_users: "信任等級 2 用戶"
         trust_level_3_requirements: "信任等級 3 之條件"
@@ -1858,6 +1887,10 @@ zh_TW:
           title: "在註冊後可以修改？"
           enabled: "可編輯"
           disabled: "不可編輯"
+        show_on_profile:
+          title: "顯示在公開的基本資料裡?"
+          enabled: "在基本資料裡顯示"
+          disabled: "不在基本資料裡顯示"
         field_types:
           text: '文字區域'
           confirm: '確認'
@@ -1891,6 +1924,7 @@ zh_TW:
           uncategorized: '其他'
           backups: "備份"
           login: "登入"
+          plugins: "延伸套件"
       badges:
         title: 徽章
         new_badge: 新徽章
@@ -1905,10 +1939,13 @@ zh_TW:
           modal_title: 徽章群組
         granted_by: 升級者為
         granted_at: 升級在
+        reason_help: (連結至文章或主題)
         save: 儲存
         delete: 刪除
         delete_confirm: 你確定要刪除徽章 ?
         revoke: 撤回
+        reason: 原因
+        expand: '展開 &hellip; '
         revoke_confirm: 你確定要撤回這個徽章?
         edit_badges: 編輯徽章
         grant_badge: 升級徽章
@@ -1995,7 +2032,7 @@ zh_TW:
         dismiss_topics: '<b>x</b>, <b>t</b> 解除主題的提示'
       actions:
         title: '行動'
-        bookmark_topic: '<b>f</b> 收藏討論話題'
+        bookmark_topic: '<b>f</b> 加入/移除書籤'
         pin_unpin_topic: '<b>shift p</b> 置頂/取消置頂'
         share_topic: '<b>shift s</b> 分享討論話題'
         share_post: '<b>s</b> 分享文章'
@@ -2057,6 +2094,9 @@ zh_TW:
         autobiographer:
           name: 自我介紹
           description: 填寫用戶<a href="/my/preferences">個人</a> 資料
+        anniversary:
+          name: 周年紀念日
+          description: 一年中的活躍使用者，至少發表一次
         nice_post:
           name: 好文章
           description: 一篇文章收到 10 個讚。此徽章可多次獲得。

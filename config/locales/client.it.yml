@@ -140,17 +140,20 @@ it:
       stat:
         all_time: "Sempre"
         last_7_days: "Ultimi 7 giorni"
+        last_30_days: "Ultimi 30 Giorni"
       like_count: "Mi piace"
       topic_count: "Argomenti"
       post_count: "Messaggi"
-      user_count: "Utenti"
+      user_count: "Nuovi Utenti"
+      active_user_count: "Utenti Attivi"
       contact: "Contattaci"
-      contact_info: "Nel caso di un problema grave o urgente riguardante il sito, per favore contattaci all'indirizzo %{contact_email}."
+      contact_info: "In caso di un problema critico o questione urgente su questo sito, per favore contattaci su %{contact_info}."
     bookmarked:
       title: "Segnalibro"
+      clear_bookmarks: "Cancella Segnalibri"
       help:
-        bookmark: "Clicca per aggiungere un segnalibro a questo argomento"
-        unbookmark: "Clicca per rimuove il segnalibro a questo argomento"
+        bookmark: "Clicca per aggiungere ai segnalibri il primo post su questo topic"
+        unbookmark: "Clicca per rimuovere tutti i segnalibri in questo argomento"
     bookmarks:
       not_logged_in: "spiacenti, devi essere connesso per aggiungere segnalibri ai messaggi"
       created: "hai inserito questo messaggio nei segnalibri."
@@ -455,6 +458,7 @@ it:
         title: "Password"
         too_short: "La password è troppo breve."
         common: "Questa password è troppo comune."
+        same_as_username: "La tua password è uguale al tuo nome utente."
         ok: "La password è adeguata"
         instructions: "Minimo %{count} caratteri."
       associated_accounts: "Login"
@@ -747,6 +751,7 @@ it:
         unread: "Non ci sono altri argomenti non letti"
         category: "Non ci sono altri argomenti nella categoria {{category}}."
         top: "Non ci sono altri argomenti di punta."
+        bookmarks: "Non ci sono ulteriori argomenti nei segnalibri."
     topic:
       filter_to: "{{post_count}} suoi messaggi"
       create: 'Nuovo Argomento'
@@ -762,7 +767,6 @@ it:
         one: '1 argomento non letto'
         other: '{{count}} argomenti non letti'
       title: 'Argomento'
-      loading: 'Caricamento dell''argomento...'
       invalid_access:
         title: "L'argomento è privato"
         description: "Spiacenti, non puoi accedere a questo argomento!"
@@ -977,6 +981,7 @@ it:
         attachment_too_large: "Spiacenti, il file che stai tentando di caricare è troppo grande (il massimo consentito è {{max_size_kb}}kb)."
         file_too_large: "Spiacenti, il file che stai cercando di caricare è troppo grande (la grandezza massima è {{max_size_kb}}kb)"
         too_many_uploads: "Spiacenti, puoi caricare un solo file per volta."
+        too_many_dragged_and_dropped_files: "Mi dispiace, puoi trascinare e spostare solo 10 file alla volta."
         upload_not_authorized: "Spiacenti, il file che stai cercando di caricare non è autorizzato (estensioni autorizzate: {{authorized_extensions}})."
         image_upload_not_allowed_for_new_user: "Spiacenti, i nuovi utenti non possono caricare immagini."
         attachment_upload_not_allowed_for_new_user: "Spiacenti, i nuovi utenti non possono caricare allegati."
@@ -1038,6 +1043,7 @@ it:
         people:
           off_topic: "{{icons}} l'hanno segnalato come fuori tema"
           spam: "{{icons}} l'hanno segnalato come spam"
+          spam_with_url: "{{icons}} ha segnalato <a href='{{postUrl}}'>questo come spam</a>"
           inappropriate: "{{icons}} l'hanno segnalato come inappropriato"
           notify_moderators: "{{icons}} hanno informato i moderatori"
           notify_moderators_with_url: "{{icons}} <a href='{{postUrl}}'>hanno informato i moderatori</a>"
@@ -1373,6 +1379,14 @@ it:
         suspended: 'Sospesi: '
         private_messages_short: "MP"
         private_messages_title: "Messaggi Privati"
+        space_free: "{{size}} liberi"
+        uploads: "caricamenti"
+        backups: "backup"
+        traffic_short: "Traffico"
+        traffic: "Richieste web dell'applicazione"
+        page_views: "Richieste API"
+        page_views_short: "Richieste API"
+        show_traffic_report: "Mostra rapporto di traffico dettagliato"
         reports:
           today: "Oggi"
           yesterday: "Ieri"
@@ -1488,6 +1502,14 @@ it:
         info_html: "La tua chiave API ti permetterà di creare e aggiornare gli argomenti usando chiamate JSON."
         all_users: "Tutti gli Utenti"
         note_html: "Mantieni <strong>segreta</strong> questa chiave, tutti gli utenti che la possiedono possono creare messaggi per conto di altri."
+      plugins:
+        title: "Plugin"
+        installed: "Plugin installati"
+        name: "Nome"
+        none_installed: "Non hai installato nessun plugin."
+        version: "Versione"
+        change_settings: "Cambia le impostazioni"
+        howto: "Come installare i plugin?"
       backups:
         title: "Backup"
         menu:
@@ -1541,6 +1563,7 @@ it:
             title: "Ripristina il database a una versione funzionante precedente"
             confirm: "Sicuro di voler ripristinare una precedente versione funzionante del database?"
       export_csv:
+        user_archive_confirm: "Sei sicuro di voler scaricare i tuoi post?"
         success: "Esportazione iniziata, verrai avvertito con un messaggio privato al termine del processo."
         failed: "Esportazione fallita. Controlla i log."
         rate_limit_error: "I messaggi possono essere scaricati una volta al giorno, prova ancora domani."
@@ -1551,6 +1574,9 @@ it:
           screened_email: "Esporta tutta la lista delle email schermate in formato CSV."
           screened_ip: "Esporta tutta la lista degli IP schermati in formato CSV."
           screened_url: "Esporta tutta la lista degli URL schermati in formato CSV."
+      invite:
+        button_text: "Manda Inviti"
+        button_title: "Manda Inviti"
       customize:
         title: "Personalizza"
         long_title: "Personalizzazioni Sito"
@@ -1737,6 +1763,7 @@ it:
             label: "Nuovo:"
             ip_address: "Indirizzo IP"
             add: "Aggiungi"
+            filter: "Cerca"
           roll_up:
             text: "Sintetizza"
             title: "Crea nuovi elenchi di indirizzi IP interdetti se ci sono almeno 'min_ban_entries_for_roll_up' elementi."
@@ -1872,6 +1899,8 @@ it:
         suspended_explanation: "Un utente sospeso non può fare il login."
         block_explanation: "Un utente bloccato non può pubblicare messaggi o iniziare argomenti."
         trust_level_change_failed: "C'è stato un problema nel cambio di livello di esperienza di questo utente.  "
+        grant_admin_failed: "Si è verificato un problema nell'assegnazione dei privilegi di amministrazione."
+        grant_moderation_failed: "Si è verificato un problema nell'assegnazione dei privilegi di moderazione."
         suspend_modal_title: "Sospendi Utente"
         trust_level_2_users: "Utenti con Livello Esperienza 2"
         trust_level_3_requirements: "Requisiti per Livello Esperienza 3"
@@ -1932,6 +1961,10 @@ it:
           title: "Modificabile dopo la registrazione?"
           enabled: "modificabile"
           disabled: "non modificabile"
+        show_on_profile:
+          title: "Mostrare nel profilo pubblico?"
+          enabled: "mostrato nel profilo"
+          disabled: "non mostrato nel profilo"
         field_types:
           text: 'Campo Testo'
           confirm: 'Conferma'
@@ -1965,6 +1998,7 @@ it:
           uncategorized: 'Altro'
           backups: "Backup"
           login: "Accesso"
+          plugins: "Plugin"
       badges:
         title: Targhette
         new_badge: Nuova Targhetta
@@ -1979,10 +2013,13 @@ it:
           modal_title: Raggruppamento Targhette
         granted_by: Assegnata Da
         granted_at: Assegnata in data
+        reason_help: (Un link a un post o argomento)
         save: Salva
         delete: Cancella
         delete_confirm: Sei sicuro di voler cancellare questa targhetta?
         revoke: Revoca
+        reason: Motivazione
+        expand: Espandi &hellip;
         revoke_confirm: Sei sicuro di voler revocare questa targhetta?
         edit_badges: Modifica Targhette
         grant_badge: Assegna Targhetta
@@ -2069,7 +2106,7 @@ it:
         dismiss_topics: '<b>x</b>, <b>t</b> Chiudi Argomenti'
       actions:
         title: 'Azioni'
-        bookmark_topic: '<b>f</b> Argomento nei segnalibri'
+        bookmark_topic: '<b>f</b> Segna argomento preferito'
         pin_unpin_topic: '<b>shift</b>+<b>p</b> Appunta/Spunta argomento'
         share_topic: '<b>shift</b>+<b>s</b> Condividi argomento'
         share_post: '<b>s</b> Condividi messaggio'
@@ -2134,6 +2171,9 @@ it:
         autobiographer:
           name: Autobiografo
           description: Completato le informazioni del tuo <a href="/my/preferences">profilo</a> utente
+        anniversary:
+          name: Anniversario
+          description: Membro attivo per un anno, ha postato almeno una volta
         nice_post:
           name: Buon Messaggio
           description: Ricevuto 10 "mi piace" in un messaggio. Questa targhetta può essere assegnata più volte.

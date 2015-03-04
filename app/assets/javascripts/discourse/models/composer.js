@@ -532,6 +532,7 @@ Discourse.Composer = Discourse.Model.extend({
       });
     }
 
+
     // If we're in a topic, we can append the post instantly.
     if (postStream) {
       // If it's in reply to another post, increase the reply count
@@ -539,7 +540,12 @@ Discourse.Composer = Discourse.Model.extend({
         post.set('reply_count', (post.get('reply_count') || 0) + 1);
         post.set('replies', []);
       }
-      if (!postStream.stagePost(createdPost, currentUser)) {
+
+      // We do not stage posts in mobile view, we do not have the "cooked"
+      // Furthermore calculating cooked is very complicated, especially since
+      // we would need to handle oneboxes and other bits that are not even in the
+      // engine, staging will just cause a blank post to render
+      if (!_.isEmpty(createdPost.get('cooked')) && !postStream.stagePost(createdPost, currentUser)) {
 
         // If we can't stage the post, return and don't save. We're likely currently
         // staging a post.

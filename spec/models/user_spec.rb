@@ -384,29 +384,6 @@ describe User do
     end
   end
 
-  describe 'temporary_key' do
-
-    let(:user) { Fabricate(:user) }
-    let!(:temporary_key) { user.temporary_key}
-
-    it 'has a temporary key' do
-      expect(temporary_key).to be_present
-    end
-
-    describe 'User#find_by_temporary_key' do
-
-      it 'can be used to find the user' do
-        expect(User.find_by_temporary_key(temporary_key)).to eq(user)
-      end
-
-      it 'returns nil with an invalid key' do
-        expect(User.find_by_temporary_key('asdfasdf')).to be_blank
-      end
-
-    end
-
-  end
-
   describe 'email_hash' do
     before do
       @user = Fabricate(:user)
@@ -1238,6 +1215,29 @@ describe User do
       user = Fabricate(:user, email: "foo@bar.com")
       group.reload
       expect(group.users.include?(user)).to eq(true)
+    end
+
+  end
+
+  describe "number_of_flags_given" do
+
+    let(:user) { Fabricate(:user) }
+    let(:moderator) { Fabricate(:moderator) }
+
+    it "doesn't count disagreed flags" do
+      post_agreed = Fabricate(:post)
+      PostAction.act(user, post_agreed, PostActionType.types[:off_topic])
+      PostAction.agree_flags!(post_agreed, moderator)
+
+      post_deferred = Fabricate(:post)
+      PostAction.act(user, post_deferred, PostActionType.types[:inappropriate])
+      PostAction.defer_flags!(post_deferred, moderator)
+
+      post_disagreed = Fabricate(:post)
+      PostAction.act(user, post_disagreed, PostActionType.types[:spam])
+      PostAction.clear_flags!(post_disagreed, moderator)
+
+      expect(user.number_of_flags_given).to eq(2)
     end
 
   end

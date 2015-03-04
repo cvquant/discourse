@@ -15,7 +15,7 @@ module Discourse
   # error_context() method in Jobs::Base to pass the job arguments and any
   # other desired context.
   # See app/jobs/base.rb for the error_context function.
-  def self.handle_exception(ex, context = {}, parent_logger = nil)
+  def self.handle_job_exception(ex, context = {}, parent_logger = nil)
     context ||= {}
     parent_logger ||= SidekiqExceptionHandler
 
@@ -170,13 +170,24 @@ module Discourse
   end
 
   def self.enable_readonly_mode
-    $redis.set readonly_mode_key, 1
+    $redis.set(readonly_mode_key, 1)
     MessageBus.publish(readonly_channel, true)
+    keep_readonly_mode
     true
   end
 
+  def self.keep_readonly_mode
+    # extend the expiry by 1 minute every 30 seconds
+    Thread.new do
+      while readonly_mode?
+        $redis.expire(readonly_mode_key, 1.minute)
+        sleep 30.seconds
+      end
+    end
+  end
+
   def self.disable_readonly_mode
-    $redis.del readonly_mode_key
+    $redis.del(readonly_mode_key)
     MessageBus.publish(readonly_channel, false)
     true
   end
@@ -278,18 +289,29 @@ module Discourse
     nil
   end
 
-  def self.start_connection_reaper(interval=30, age=30)
+  def self.start_connection_reaper
+    return if GlobalSetting.connection_reaper_age < 1 ||
+              GlobalSetting.connection_reaper_interval < 1
+
     # this helps keep connection counts in check
     Thread.new do
       while true
-        sleep interval
-        pools = []
-        ObjectSpace.each_object(ActiveRecord::ConnectionAdapters::ConnectionPool){|pool| pools << pool}
-
-        pools.each do |pool|
-          pool.drain(age.seconds)
+        begin
+          sleep GlobalSetting.connection_reaper_interval
+          reap_connections(GlobalSetting.connection_reaper_age)
+        rescue => e
+          Discourse.handle_exception(e, {message: "Error reaping connections"})
         end
       end
+    end
+  end
+
+  def self.reap_connections(age)
+    pools = []
+    ObjectSpace.each_object(ActiveRecord::ConnectionAdapters::ConnectionPool){|pool| pools << pool}
+
+    pools.each do |pool|
+      pool.drain(age.seconds)
     end
   end
 

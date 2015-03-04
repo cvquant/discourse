@@ -15,7 +15,7 @@ var TopicView = Discourse.View.extend(AddCategoryClass, Discourse.Scrolling, {
   menuVisible: true,
   SHORT_POST: 1200,
 
-  categorySlug: Em.computed.alias('topic.category.slug'),
+  categoryFullSlug: Em.computed.alias('topic.category.fullSlug'),
 
   postStream: Em.computed.alias('controller.postStream'),
 
@@ -51,8 +51,8 @@ var TopicView = Discourse.View.extend(AddCategoryClass, Discourse.Scrolling, {
 
       var $target = $(e.target);
       if ($target.hasClass('mention') || $target.parents('.expanded-embed').length) { return false; }
-      return Discourse.ClickTrack.trackClick(e);
 
+      return Discourse.ClickTrack.trackClick(e);
     });
 
   }.on('didInsertElement'),
@@ -126,7 +126,7 @@ var TopicView = Discourse.View.extend(AddCategoryClass, Discourse.Scrolling, {
     var opts = { latestLink: "<a href=\"" + Discourse.getURL("/latest") + "\">" + I18n.t("topic.view_latest_topics") + "</a>" },
         category = this.get('controller.content.category');
 
-    if(Em.get(category, 'id') === Discourse.Site.currentProp("uncategorized_category_id")) {
+    if(category && Em.get(category, 'id') === Discourse.Site.currentProp("uncategorized_category_id")) {
       category = null;
     }
 

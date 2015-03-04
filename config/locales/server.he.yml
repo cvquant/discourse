@@ -31,10 +31,38 @@ he:
   purge_reason: "נמחק באופן אוטומטי כחשבון נטוש ולא פעיל"
   disable_remote_images_download_reason: "הורדת תמונות מרחוק נחסמה בשל היעדר מספיק שטח אכסון פנוי."
   errors:
+    format: '%{attribute} %{message}'
     messages:
       too_long_validation: "מוגבל לאורך של  %{max} תוים: את/ה הקשת %{length}."
       invalid_boolean: "בוליאני לא חוקי."
-      taken: "כבר תפוס. (שמות קבוצות באנגלית אינן מבדילות בין אותיות גדולות וקטנות)"
+      taken: "כבר תפוס"
+      accepted: חייב להתקבל
+      blank: לא ניתן להשאיר ריק
+      present: חייב להיות ריק
+      confirmation: "לא תואם ל-%{attribute}"
+      empty: לא יכול להיות ריק
+      equal_to: חייב להיות שווה ל-%{count}
+      even: חייב להיות זוגי
+      exclusion: שמור
+      greater_than: ' חייב להיות יותר מ-%{count}'
+      greater_than_or_equal_to: חייב להיות גדול יותר או שווה ל-%{count}
+      inclusion: לא נכלל ברשימה
+      invalid: לא תקין
+      less_than: חייב להיות פחות מ-%{count}
+      less_than_or_equal_to: חייב להיות פחות או שווה ל-%{count}
+      not_a_number: אינו מספר
+      not_an_integer: חייב להיות מספר שלם
+      odd: חייב להיות א-זוגי
+      record_invalid: 'בדיקה נכשלה: %{errors}'
+      restrict_dependent_destroy:
+        one: "לא ניתן למחוק בגלל קיומה של רשומה תלוייה %{record}"
+        many: "לא ניתן למחוק רשומה בגלל קיומה של רשומה תלויה %{record}"
+      too_long:
+        one: ארוף מידי (המקסימום האפשרי הוא תו אחד)
+        other: ארוך מידי (המקסימום האפשרי הוא %{count} תוים)
+      too_short:
+        one: קצר מידי (המינימום הנדרש הוא תו 1)
+        other: קצר מידי (המינימום הנדרש הוא %{count} תוים)
     embed:
       load_from_remote: "ארעה שגיאה בטעינת ההודעה הזו."
   bulk_invite:
@@ -138,14 +166,6 @@ he:
       האם שקלת **[לבקר בעמוד הפרופיל שלך](%{profile_path})** ולהעלות תמונה אישית שמייצגת אותך?
 
       יותר קל לעקוב אחרי דיוני הקהילה ולמצוא אנשים מעניינים בשיחות כשלכולם יש אוואטר ייחודי!
-    sequential_replies: |
-      ### שקלו להגיב למספר הודעות בבת אחת
-
-      במקום להגיב סדרתית להרבה תגובות של נושא מסויים, שקלו להגיב פעם אחת תוך שימוש בציטוטים ואזכורי @שם לתגובות קודמות.
-
-      ניתן לערוך תגובה קודמת להוספת ציטוט על ידי סימון טקסט ולחיצה על  <b>תגובת ציטוט</b>.
-
-      קל יותר לכולם לקרוא נושאים שיש בהם מעט תגובות מקיפות אל מול המון תגובות בודדות קצרות.
     dominating_topic: |
       ### אפשר לאחרים להצטרף לשיחה
 
@@ -437,7 +457,6 @@ he:
       xaxis: "יום"
       yaxis: "מספר ביקורים"
     signups:
-      title: "משתמשים"
       xaxis: "יום"
       yaxis: "מספר משתמשים חדשים"
     topics:
@@ -666,7 +685,6 @@ he:
     max_username_length: "מספר תווים מקסימלי המותר לשם משתמש/ת. אזהרה: משתמשים קיימים עם שמות הארוכים מערך זה לא יוכלו להתחבר לאתר."
     min_password_length: "Minimum password length."
     block_common_passwords: "אל תאפשרו סיסמאות מתוך 10,000 הסיסמאות הנפוצות ביותר."
-    enable_sso_provider: "ליישם את פרוטוקול SSO של Discourse בנקודת הסיום /session/sso, זה דורש כיוון של sso_secret."
     sso_url: "URL of single sign on endpoint"
     sso_overrides_email: "Overrides local email with external site email from SSO payload (WARNING: discrepancies can occur due to normalization of local emails)"
     sso_overrides_username: "Overrides local username with external site username from SSO payload (WARNING: discrepancies can occur due to differences in username length/requirements)"
@@ -832,7 +850,6 @@ he:
     suppress_uncategorized_badge: "אל תציגו את התג (badge) לנושאים נטולי קטגוריה ברשימת הנושאים."
     global_notice: "הציגו הודעת אזהרה דחופה כללית לכל המבקרים, החליפו לריק כדי להסתיר אותה (ניתן להשתמש ב-HTML)."
     disable_edit_notifications: "ביטול התראות עריכה על ידי משתמש המערכת כאשר 'download_remote_images_to_local' פעיל."
-    enable_names: "אפשרו הצגת שמות מלאים של משתמשים. בטלו אפשרות זו כדי להסתיר את השמות המלאים."
     display_name_on_posts: "הצגת שמם המלא של משתמשים בפרסומיהם, בנוסף ל@שם_המשתמש שלהם."
     invites_per_page: "ברירת המחדל, הזמנות המוצגות בעמוד המשתמש."
     short_progress_text_threshold: "After the number of posts in a topic goes above this number, the progress bar will only show the current post number. If you change the progress bar's width, you may need to change this value."
@@ -1088,16 +1105,6 @@ he:
         להדרכה נוספת אנא פנו למסמך ה[קווים המנחים של הקהילה שלנו](%{base_url}/guidelines).
     welcome_user:
       subject_template: "ברוכים הבאים ל %{site_name}!"
-      text_body_template: |
-        תודה שהצטרפת אל %{site_name} וברוך/ברוכה הבא/ה!
-
-        %{new_user_tips}
-
-        אנו מאמינים ב[התנהגות קהילתית מתורבתת](%{base_url}/guidelines) בכל עת.
-
-        (אם אתם זקוקים לתקשר באופן פרטי עם [חברי צוות](/about) כמשתמשים חדשים, פשוט השיבו למסר הפרטי הזה.)
-
-        תכייפו!
     welcome_invite:
       subject_template: "Welcome to %{site_name}!"
     backup_succeeded:
@@ -1382,23 +1389,6 @@ he:
         %{base_url}/users/authorize-email/%{email_token}
     signup_after_approval:
       subject_template: "You've been approved on %{site_name}!"
-      text_body_template: |
-        ברוכים הבאים אל %{site_name}!
-
-        חבר/ה בצוות שלנו אישר את חשבונך ב%{site_name}.
-
-        הקישו על הקישור הבא כדי לאשר ולהפעיל את חשבון המשתמש/ת החדש שלכם:
-        %{base_url}/users/activate-account/%{email_token}
-
-        אם לא ניתן להקליק על הקישור, נסו להעתיק ולהדביר אותו אל שורת הכתובת בדפדפן שלכם.
-
-        %{new_user_tips}
-
-        אנחנו מאמינים ב[התנהגות קהילתית מתורבתת](%{base_url}/guidelines) בכל עת.
-
-        (אם אתם צריכים לתקשר באופן פרטי עם [אנשי הצוות](/about) שלנו, כמשתמשים חדשים פשוט שלחו תגובה להודעה זו)
-
-        תהנו!
     signup:
       subject_template: "[%{site_name}] Activate your new account"
       text_body_template: |

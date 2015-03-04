@@ -63,7 +63,7 @@ describe SiteSetting do
   end
 
   describe "top_menu" do
-    before(:each) { SiteSetting.top_menu = 'one,-nope|two|three,-not|four,ignored|category/xyz' }
+    before { SiteSetting.top_menu = 'one,-nope|two|three,-not|four,ignored|category/xyz|latest' }
 
     describe "items" do
       let(:items) { SiteSetting.top_menu_items }
@@ -83,7 +83,7 @@ describe SiteSetting do
   describe "scheme" do
 
     it "returns http when ssl is disabled" do
-      SiteSetting.expects(:use_https).returns(false)
+      SiteSetting.use_https = false
       expect(SiteSetting.scheme).to eq("http")
     end
 

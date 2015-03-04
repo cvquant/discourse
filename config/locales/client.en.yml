@@ -163,13 +163,14 @@ en:
       user_count: "New Users"
       active_user_count: "Active Users"
       contact: "Contact Us"
-      contact_info: "In the event of a critical issue or urgent matter affecting this site, please contact us at %{contact_email}."
+      contact_info: "In the event of a critical issue or urgent matter affecting this site, please contact us at %{contact_info}."
 
     bookmarked:
       title: "Bookmark"
+      clear_bookmarks: "Clear Bookmarks"
       help:
-        bookmark: "Click to bookmark this topic"
-        unbookmark: "Click to remove bookmark to this topic"
+        bookmark: "Click to bookmark the first post on this topic"
+        unbookmark: "Click to remove all bookmarks in this topic"
 
     bookmarks:
       not_logged_in: "sorry, you must be logged in to bookmark posts"
@@ -513,6 +514,8 @@ en:
         title: "Password"
         too_short: "Your password is too short."
         common: "That password is too common."
+        same_as_username: "Your password is the same as your username."
+        same_as_email: "Your password is the same as your email."
         ok: "Your password looks good."
         instructions: "At least %{count} characters."
 
@@ -637,6 +640,7 @@ en:
       requires_invite: "Sorry, access to this forum is by invite only."
       not_activated: "You can't log in yet. We previously sent an activation email to you at <b>{{sentTo}}</b>. Please follow the instructions in that email to activate your account."
       not_allowed_from_ip_address: "You can't login from that IP address."
+      admin_not_allowed_from_ip_address: "You can't log in as admin from that IP address."
       resend_activation_email: "Click here to send the activation email again."
       sent_activation_email_again: "We sent another activation email to you at <b>{{currentEmail}}</b>. It might take a few minutes for it to arrive; be sure to check your spam folder."
       google:
@@ -1106,6 +1110,7 @@ en:
         attachment_too_large: "Sorry, the file you are trying to upload is too big (maximum size is {{max_size_kb}}kb)."
         file_too_large: "Sorry, the file you are trying to upload is too big (maximum size is {{max_size_kb}}kb)"
         too_many_uploads: "Sorry, you can only upload one file at a time."
+        too_many_dragged_and_dropped_files: "Sorry, you can only drag & drop up to 10 files at a time."
         upload_not_authorized: "Sorry, the file you are trying to upload is not authorized (authorized extension: {{authorized_extensions}})."
         image_upload_not_allowed_for_new_user: "Sorry, new users can not upload images."
         attachment_upload_not_allowed_for_new_user: "Sorry, new users can not upload attachments."
@@ -1173,6 +1178,7 @@ en:
         people:
           off_topic: "{{icons}} flagged this as off-topic"
           spam: "{{icons}} flagged this as spam"
+          spam_with_url: "{{icons}} flagged <a href='{{postUrl}}'>this as spam</a>"
           inappropriate: "{{icons}} flagged this as inappropriate"
           notify_moderators: "{{icons}} notified moderators"
           notify_moderators_with_url: "{{icons}} <a href='{{postUrl}}'>notified moderators</a>"
@@ -1402,7 +1408,7 @@ en:
     posts_lowercase: "posts"
     posts_long: "there are {{number}} posts in this topic"
     posts_likes_MF: |
-      This topic has {count, plural, one {1 post} other {# posts}} {ratio, select,
+      This topic has {count, plural, one {1 reply} other {# replies}} {ratio, select,
         low {with a high like to post ratio}
         med {with a very high like to post ratio}
         high {with an extremely high like to post ratio}
@@ -1537,8 +1543,8 @@ en:
         backups: "backups"
         traffic_short: "Traffic"
         traffic: "Application web requests"
-        page_views: "Page Views"
-        page_views_short: "Page Views"
+        page_views: "API Requests"
+        page_views_short: "API Requests"
         show_traffic_report: "Show Detailed Traffic Report"
 
         reports:
@@ -1728,6 +1734,7 @@ en:
             confirm: "Are your sure you want to rollback the database to the previous working state?"
 
       export_csv:
+        user_archive_confirm: "Are you sure you want to download your posts?"
         success: "Export initiated, you will be notified via private message when the process is complete."
         failed: "Export failed. Please check the logs."
         rate_limit_error: "Posts can be downloaded once per day, please try again tomorrow."
@@ -1738,6 +1745,10 @@ en:
           screened_email: "Export full screened email list in CSV format."
           screened_ip: "Export full screened IP list in CSV format."
           screened_url: "Export full screened URL list in CSV format."
+
+      invite:
+        button_text: "Send Invites"
+        button_title: "Send Invites"
 
       customize:
         title: "Customize"
@@ -2150,6 +2161,7 @@ en:
         none: 'none'
         no_results: "No results found."
         clear_filter: "Clear"
+        add_url: "add URL"
         categories:
           all_results: 'All'
           required: 'Required'
@@ -2186,10 +2198,13 @@ en:
           modal_title: Badge Groupings
         granted_by: Granted By
         granted_at: Granted At
+        reason_help: (A link to a post or topic)
         save: Save
         delete: Delete
         delete_confirm: Are you sure you want to delete this badge?
         revoke: Revoke
+        reason: Reason
+        expand: Expand &hellip;
         revoke_confirm: Are you sure you want to revoke this badge?
         edit_badges: Edit Badges
         grant_badge: Grant Badge
@@ -2280,7 +2295,7 @@ en:
         dismiss_topics: '<b>x</b>, <b>t</b> Dismiss Topics'
       actions:
         title: 'Actions'
-        bookmark_topic: '<b>f</b> Bookmark topic'
+        bookmark_topic: '<b>f</b> Toggle bookmark topic'
         pin_unpin_topic: '<b>shift</b>+<b>p</b> Pin/Unpin topic'
         share_topic: '<b>shift</b>+<b>s</b> Share topic'
         share_post: '<b>s</b> Share post'
@@ -2346,6 +2361,9 @@ en:
         autobiographer:
           name: Autobiographer
           description: Filled user <a href="/my/preferences">profile</a> information
+        anniversary:
+          name: Anniversary
+          description: Active member for a year, posted at least once
         nice_post:
           name: Nice Post
           description: Received 10 likes on a post. This badge can be granted multiple times

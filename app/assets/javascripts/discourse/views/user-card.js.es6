@@ -6,7 +6,7 @@ var clickOutsideEventName = "mousedown.outside-user-card",
 
 export default Discourse.View.extend(CleansUp, {
   elementId: 'user-card',
-  classNameBindings: ['controller.visible::hidden', 'controller.showBadges', 'controller.hasCardBadgeImage'],
+  classNameBindings: ['controller.visible:show', 'controller.showBadges', 'controller.hasCardBadgeImage'],
   allowBackgrounds: Discourse.computed.setting('allow_profile_backgrounds'),
 
   addBackground: function() {
@@ -43,8 +43,9 @@ export default Discourse.View.extend(CleansUp, {
     });
 
     var expand = function(username, $target){
+      var postId = $target.parents('article').data('post-id');
       self._willShow($target);
-      self.get('controller').show(username, $target[0]);
+      self.get('controller').show(username, postId, $target[0]);
       return false;
     };
 
@@ -83,7 +84,7 @@ export default Discourse.View.extend(CleansUp, {
 
           var overage = ($(window).width() - 50) - (position.left + width);
           if (overage < 0) {
-            position.left -= (width/2) - 10;
+            position.left += overage;
             position.top += target.height() + 8;
           }
 

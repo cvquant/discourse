@@ -222,40 +222,23 @@ describe TopicsController do
       let(:topic) { Fabricate(:topic) }
       let(:user_a) { Fabricate(:user) }
       let(:p1) { Fabricate(:post, topic_id: topic.id) }
+      let(:p2) { Fabricate(:post, topic_id: topic.id) }
 
       it "raises an error with a parameter missing" do
         expect { xhr :post, :change_post_owners, topic_id: 111, post_ids: [1,2,3] }.to raise_error(ActionController::ParameterMissing)
         expect { xhr :post, :change_post_owners, topic_id: 111, username: 'user_a' }.to raise_error(ActionController::ParameterMissing)
       end
 
-      it "calls PostRevisor" do
-        PostRevisor.any_instance.expects(:revise!)
+      it "calls PostOwnerChanger" do
+        PostOwnerChanger.any_instance.expects(:change_owner!).returns(true)
         xhr :post, :change_post_owners, topic_id: topic.id, username: user_a.username_lower, post_ids: [p1.id]
         expect(response).to be_success
       end
 
-      it "changes the user" do
-        old_user = p1.user
-        xhr :post, :change_post_owners, topic_id: topic.id, username: user_a.username_lower, post_ids: [p1.id]
-        p1.reload
-        expect(old_user).not_to eq(p1.user)
-      end
-
-      # Make sure that p1.reload isn't changing the user for us
-      it "is not an artifact of the framework" do
-        old_user = p1.user
-        # xhr :post, :change_post_owners, topic_id: topic.id, username: user_a.username_lower, post_ids: [p1.id]
-        p1.reload
-        expect(p1.user).not_to eq(nil)
-        expect(old_user).to eq(p1.user)
-      end
-
-      let(:p2) { Fabricate(:post, topic_id: topic.id) }
-
       it "changes multiple posts" do
+        # an integration test
         xhr :post, :change_post_owners, topic_id: topic.id, username: user_a.username_lower, post_ids: [p1.id, p2.id]
-        p1.reload
-        p2.reload
+        p1.reload; p2.reload
         expect(p1.user).not_to eq(nil)
         expect(p1.user).to eq(p2.user)
       end
@@ -724,6 +707,11 @@ describe TopicsController do
           xhr :put, :update, topic_id: @topic.id, slug: @topic.title, category_id: 123
         end
 
+        it 'allows to change category to "uncategorized"' do
+          Topic.any_instance.expects(:change_category_to_id).with(0).returns(true)
+          xhr :put, :update, topic_id: @topic.id, slug: @topic.title, category_id: ""
+        end
+
         it "returns errors with invalid titles" do
           xhr :put, :update, topic_id: @topic.id, slug: @topic.title, title: 'asdf'
           expect(response).not_to be_success
@@ -745,6 +733,22 @@ describe TopicsController do
           PostRevisor.any_instance.expects(:revise!).never
           xhr :put, :update, topic_id: @topic.id, slug: @topic.title, title: @topic.title, category_id: @topic.category_id
           expect(response).to be_success
+        end
+
+        context 'when topic is private' do
+          before do
+            @topic.archetype = Archetype.private_message
+            @topic.category = nil
+            @topic.save!
+          end
+
+          context 'when there are no changes' do
+            it 'does not call the PostRevisor' do
+              PostRevisor.any_instance.expects(:revise!).never
+              xhr :put, :update, topic_id: @topic.id, slug: @topic.title, title: @topic.title, category_id: nil
+              expect(response).to be_success
+            end
+          end
         end
 
         context "allow_uncategorized_topics is false" do
@@ -769,7 +773,7 @@ describe TopicsController do
       it "works correctly" do
         group = Fabricate(:group)
         topic = Fabricate(:topic)
-        admin = log_in(:admin)
+        _admin = log_in(:admin)
 
         xhr :post, :invite, topic_id: topic.id, email: 'hiro@from.heros', group_ids: "#{group.id}"
 
@@ -836,7 +840,7 @@ describe TopicsController do
     end
 
     it 'needs you to be an admin or mod' do
-      user = log_in
+      log_in
       xhr :put, :autoclose, topic_id: 99, auto_close_time: '24', auto_close_based_on_last_post: false
       expect(response).to be_forbidden
     end
@@ -935,6 +939,25 @@ describe TopicsController do
         topics_bulk_action.expects(:perform!)
         xhr :put, :bulk, topic_ids: topic_ids, operation: operation
       end
+    end
+  end
+
+  describe 'remove_bookmarks' do
+    it "should remove bookmarks properly from non first post" do
+      bookmark = PostActionType.types[:bookmark]
+      user = log_in
+
+      post = create_post
+      post2 = create_post(topic_id: post.topic_id)
+
+      PostAction.act(user, post2, bookmark)
+
+      xhr :put, :bookmark, topic_id: post.topic_id
+      PostAction.where(user_id: user.id, post_action_type: bookmark).count.should == 2
+
+      xhr :put, :remove_bookmarks, topic_id: post.topic_id
+      PostAction.where(user_id: user.id, post_action_type: bookmark).count.should == 0
+
     end
   end
 

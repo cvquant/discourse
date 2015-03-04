@@ -1,8 +1,8 @@
-export default Ember.ArrayController.extend(Discourse.HasCurrentUser, {
+export default Ember.ArrayController.extend({
   showAdminLinks: Em.computed.alias("currentUser.staff"),
 
   actions: {
-    logout: function() {
+    logout() {
       if(Discourse.SiteSettings.qplum_integration) {
         window.location = Discourse.getURL(Discourse.SiteSettings.qplum_logout_url);
         return false;
